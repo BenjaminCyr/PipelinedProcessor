@@ -11,7 +11,7 @@ entity ID_EX_Register is
 		Control_In: in std_logic_vector(ControlBits-1 downto 0);
 		Control_Out: out std_logic_vector(ControlBits-1 downto 0);
 		Branch_Taken_In: in std_logic;
-		Branch_Taken_Out: out std_logic);
+		Branch_Taken_Out: out std_logic;
 		PC_In: in std_logic_vector(RegWidth-1 downto 0);
 		PC_Out: out std_logic_vector(RegWidth-1 downto 0);
 		Reg1_In: in std_logic_vector(RegWidth-1 downto 0);
@@ -25,7 +25,7 @@ entity ID_EX_Register is
 		Rt_In: in std_logic_vector(AddrBits-1 downto 0);
 		Rt_Out: out std_logic_vector(AddrBits-1 downto 0);
 		Rd_In: in std_logic_vector(AddrBits-1 downto 0);
-		Rd_Out: out std_logic_vector(AddrBits-1 downto 0);
+		Rd_Out: out std_logic_vector(AddrBits-1 downto 0));
 end entity ID_EX_Register;
 
 architecture ID_EX_Register_Behavior of ID_EX_Register is
