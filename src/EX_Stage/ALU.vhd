@@ -28,8 +28,8 @@ architecture ALU_Behavior of ALU is
 					Op1 or Op2 when ALUOp = "100" else
 					zeros + 1 when ALUOp = "101" and Op1 < Op2 else
 					zeros when ALUOp = "101" and Op1 >= Op2 else
-					shift_left(Op1, to_integer(Op2)) when ALUOp = "110" else
-					shift_right(Op1, to_integer(Op2)) when ALUOp = "111" else
+					shift_left(Op1, to_integer(unsigned(Op2))) when ALUOp = "110" else
+					shift_right(Op1, to_integer(unsigned(Op2))) when ALUOp = "111" else
 					(others => 'X');
 		Zero <= '1' when Result = zeros else '0';
 		ALUOut <= std_logic_vector(Result);
