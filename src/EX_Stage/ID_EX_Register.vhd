@@ -14,10 +14,10 @@ entity ID_EX_Register is
 		Branch_Taken_Out: out std_logic;
 		PC_In: in std_logic_vector(RegWidth-1 downto 0);
 		PC_Out: out std_logic_vector(RegWidth-1 downto 0);
-		Reg1_In: in std_logic_vector(RegWidth-1 downto 0);
-		Reg1_Out: out std_logic_vector(RegWidth-1 downto 0);
-		Reg2_In: in std_logic_vector(RegWidth-1 downto 0);
-		Reg2_Out: out std_logic_vector(RegWidth-1 downto 0);
+		ReadData1_In: in std_logic_vector(RegWidth-1 downto 0);
+		ReadData1_Out: out std_logic_vector(RegWidth-1 downto 0);
+		ReadData2_In: in std_logic_vector(RegWidth-1 downto 0);
+		ReadData2_Out: out std_logic_vector(RegWidth-1 downto 0);
 		Imm_In: in std_logic_vector(RegWidth-1 downto 0);
 		Imm_Out: out std_logic_vector(RegWidth-1 downto 0);
 		Rs_In: in std_logic_vector(AddrBits-1 downto 0);
@@ -32,8 +32,8 @@ architecture ID_EX_Register_Behavior of ID_EX_Register is
 	signal Control: std_logic_vector(ControlBits-1 downto 0);
 	signal Branch_Taken: std_logic;
 	signal PC: std_logic_vector(RegWidth-1 downto 0);
-	signal Reg1: std_logic_vector(RegWidth-1 downto 0);
-	signal Reg2: std_logic_vector(RegWidth-1 downto 0);
+	signal ReadData1: std_logic_vector(RegWidth-1 downto 0);
+	signal ReadData2: std_logic_vector(RegWidth-1 downto 0);
 	signal Imm: std_logic_vector(RegWidth-1 downto 0);
 	signal Rs: std_logic_vector(AddrBits-1 downto 0);
 	signal Rt: std_logic_vector(AddrBits-1 downto 0);
@@ -42,8 +42,8 @@ architecture ID_EX_Register_Behavior of ID_EX_Register is
 		Control_Out <= Control;
 		Branch_Taken_Out <= Branch_Taken;
 		PC_Out <= PC;
-		Reg1_Out <= Reg1;
-		Reg2_Out <= Reg2;
+		ReadData1_Out <= Reg1;
+		ReadData2_Out <= Reg2;
 		Imm_Out <= Imm;
 		Rs_Out <= Rs;
 		Rt_Out <= Rt;
@@ -55,8 +55,8 @@ architecture ID_EX_Register_Behavior of ID_EX_Register is
 					Control <= (others => '0');
 					Branch_Taken <= '0';
 					PC <= (others => '0');
-					Reg1 <= (others => '0');
-					Reg2 <= (others => '0');
+					ReadData1 <= (others => '0');
+					ReadData2 <= (others => '0');
 					Imm <= (others => '0');
 					Rs <= (others => '0');
 					Rt <= (others => '0');
@@ -65,8 +65,8 @@ architecture ID_EX_Register_Behavior of ID_EX_Register is
 					Control <= Control_In;
 					Branch_Taken <= Branch_Taken_In;
 					PC <= PC_In;
-					Reg1 <= Reg1_In;
-					Reg2 <= Reg2_In;
+					ReadData1 <= ReadData1_In;
+					ReadData2 <= ReadData2_In;
 					Imm <= Imm_In;
 					Rs <= Rs_In;
 					Rt <= Rt_In;
