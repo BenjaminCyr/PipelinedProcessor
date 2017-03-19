@@ -1,3 +1,9 @@
+----------------------------------------------
+-- File: 		ID_EX_Register.vhd
+-- Created By: 	Benjamin Cyr
+-- Date: 		March 18, 2017	
+---------------------------------------------
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 

@@ -1,3 +1,9 @@
+----------------------------------------------
+-- File: 		Forwarding_Unit.vhd
+-- Created By: 	Benjamin Cyr
+-- Date: 		March 18, 2017	
+---------------------------------------------
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 
@@ -16,14 +22,14 @@ end entity Forwarding_Unit;
 
 architecture Forwarding_Unit_Behavior of Forwarding_Unit is
 	begin
-		ForwardA <= "01" when EX_MEM_RegWrite = '1' and EX_MEM_DestReg = 
-			ID_EX_Rs and (not EX_MEM_DestReg = (others => '0')) else
-					"10" when MEM_WB_RegWrite = '1' and MEM_WB_DestReg =
-			ID_EX_Rs and (not MEM_WB_DestReg = (others => '0')) else
+		ForwardA <= "01" when EX_MEM_RegWrite = '1' 
+							and EX_MEM_DestReg = ID_EX_Rs else
+					"10" when MEM_WB_RegWrite = '1' 
+							and MEM_WB_DestReg = ID_EX_Rs else
 					"00";
-		ForwardB <= "01" when EX_MEM_RegWrite = '1' and EX_MEM_DestReg = 
-			ID_EX_Rt and (not EX_MEM_DestReg = (others => '0')) else
-					"10" when MEM_WB_RegWrite = '1' and MEM_WB_DestReg =
-			ID_EX_Rt and (not MEM_WB_DestReg = (others => '0')) else
+		ForwardB <= "01" when EX_MEM_RegWrite = '1' 
+							and EX_MEM_DestReg = ID_EX_Rt else
+					"10" when MEM_WB_RegWrite = '1' 
+							and MEM_WB_DestReg = ID_EX_Rt else
 					"00";
 end architecture Forwarding_Unit_Behavior;
