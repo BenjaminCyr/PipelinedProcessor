@@ -11,6 +11,7 @@ entity IF_ID_Register is
 	generic (InstrWidth : integer := 16);
 	port (
     	CLK: in std_logic;
+		RST: in std_logic;
 		Stall: in std_logic;
 		Flush: in std_logic;
 		Instruction_In: in std_logic_vector(InstrWidth-1 downto 0);
@@ -32,7 +33,7 @@ architecture IF_ID_Register_Behavior of IF_ID_Register is
 		process(CLK)
 		begin
 			if rising_edge(CLK) then
-				if Flush = '1' then
+				if RST = '1' or Flush = '1' then
 					Instruction <= (others => '0');
 					PC <= (others => '0');
 					Branch_Taken <= '0';

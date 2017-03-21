@@ -27,6 +27,7 @@ architecture PC_Register_Behavior of PC_Register is
 					PC <= (others => '0');
 				else
 					PC <= PC_In;
+				end if;
 			end if;
 		end process;
 end architecture PC_Register_Behavior;

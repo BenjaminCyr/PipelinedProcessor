@@ -55,6 +55,7 @@ architecture Branch_Predictor_Behavior of Branch_Predictor is
 					History(to_integer(unsigned(BranchSourceAddress(AddrBits-1 downto 0)))) <= (HistoryBit <= not History(to_integer(unsigned(BranchSourceAddress(AddrBits-1 downto 0)))).HistoryBit,
 					SourceAddr <= BranchSourceAddress,
 					TargetAddr <= BranchTargetAddress);
+				end if;
 			end if;
 		end process;
 end architecture Branch_Predictor_Behavior;

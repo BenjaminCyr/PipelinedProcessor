@@ -13,6 +13,7 @@ entity MEM_WB_Register is
 			 AddrBits : integer := 3);
 	port (
     	CLK: in std_logic;
+		RST: in std_logic;
 		Control_In: in std_logic_vector(ControlBits-1 downto 0);
 		Control_Out: out std_logic_vector(ControlBits-1 downto 0);
 		MemOut_In: in std_logic_vector(RegWidth-1 downto 0);
@@ -36,10 +37,17 @@ architecture MEM_WB_Register_Behavior of MEM_WB_Register is
 		process(CLK)
 		begin
 			if rising_edge(CLK) then
-				Control <= Control_In;
-				MemOut <= MemOut_In;
-				ALUOut <= ALUOut_In;
-				DestReg <= DestReg_In;
+				if RST = '1' then
+					Control <= (others => '0');
+					MemOut <= (others => '0');
+					ALUOut <= (others => '0');
+					DestReg <= (others => '0');
+				else
+					Control <= Control_In;
+					MemOut <= MemOut_In;
+					ALUOut <= ALUOut_In;
+					DestReg <= DestReg_In;
+				end if;
 			end if;
 		end process;
 end architecture MEM_WB_Register_Behavior;

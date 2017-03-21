@@ -13,6 +13,8 @@ entity ID_EX_Register is
 			 AddrBits : integer := 3);
 	port (
     	CLK: in std_logic;
+		RST: in std_logic;
+		Stall: in std_logic;
 		Flush: in std_logic;
 		Control_In: in std_logic_vector(ControlBits-1 downto 0);
 		Control_Out: out std_logic_vector(ControlBits-1 downto 0);
@@ -57,7 +59,7 @@ architecture ID_EX_Register_Behavior of ID_EX_Register is
 		process(CLK)
 		begin
 			if rising_edge(CLK) then
-				if Flush = '1' then
+				if RST = '1' or Flush = '1' or Stall = '1' then
 					Control <= (others => '0');
 					Branch_Taken <= '0';
 					PC <= (others => '0');

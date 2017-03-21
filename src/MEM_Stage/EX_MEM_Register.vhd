@@ -13,6 +13,7 @@ entity EX_MEM_Register is
 			 AddrBits : integer := 3);
 	port (
     	CLK: in std_logic;
+		RST: in std_logic;
 		Control_In: in std_logic_vector(ControlBits-1 downto 0);
 		Control_Out: out std_logic_vector(ControlBits-1 downto 0);
 		ALUOut_In: in std_logic_vector(RegWidth-1 downto 0);
@@ -36,10 +37,17 @@ architecture EX_MEM_Register_Behavior of EX_MEM_Register is
 		process(CLK)
 		begin
 			if rising_edge(CLK) then
-				Control <= Control_In;
-				ALUOut <= ALUOut_In;
-				MemData <= MemData_In;
-				DestReg <= DestReg_In;
+				if RST = '1' then
+					Control <= (others => '0');
+					ALUOut <= (others => '0');
+					MemData <= (others => '0');
+					DestReg <= (others => '0');
+				else
+					Control <= Control_In;
+					ALUOut <= ALUOut_In;
+					MemData <= MemData_In;
+					DestReg <= DestReg_In;
+				end if;
 			end if;
 		end process;
 end architecture EX_MEM_Register_Behavior;

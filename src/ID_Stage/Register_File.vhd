@@ -13,6 +13,7 @@ entity Register_File is
 			 AddrBits : integer := 3);
 	port (
     	CLK: in std_logic;
+		RST: in std_logic;
 		WriteEN: in std_logic;
 		ReadAddr1: in std_logic_vector(AddrBits-1 downto 0);
 		ReadAddr2: in std_logic_vector(AddrBits-1 downto 0);
@@ -38,8 +39,12 @@ architecture Register_File_Behavior of Register_File is
 						registers(to_integer(UNSIGNED(inr)));
 		process(CLK)
 		begin
-			if rising_edge(CLK) and WriteEN = '1' and then
-				registers(to_integer(UNSIGNED(WriteAddr))) <= WriteData;
+			if rising_edge(CLK) then
+				if RST = '1' then
+					registers <= (others => (others => '0'));
+				elsif WriteEN = '1' then
+					registers(to_integer(UNSIGNED(WriteAddr))) <= WriteData;
+				end if;
 			end if;
 		end process;
 end architecture Register_File_Behavior;
