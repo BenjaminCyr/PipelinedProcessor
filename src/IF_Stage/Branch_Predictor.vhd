@@ -17,6 +17,7 @@ entity Branch_Predictor is
 		PredictionMiss: in std_logic;
 		Instruction: in std_logic_vector(DataWidth-1 downto 0);
 		PCPlusOne: in std_logic_vector(DataWidth-1 downto 0);
+		ShouldBranch: in std_logic;
 		BranchTargetAddress: in std_logic_vector(DataWidth-1 downto 0);
 		BranchSourceAddress: in std_logic_vector(DataWidth-1 downto 0);
 		PredictedAddress: out std_logic_vector(DataWidth-1 downto 0);
@@ -52,7 +53,7 @@ architecture Branch_Predictor_Behavior of Branch_Predictor is
 				if RST = '1' then
 					History <= (others => ENTRY_INIT);
 				elsif PredictionMiss = '1' then
-					History(to_integer(unsigned(BranchSourceAddress(AddrBits-1 downto 0)))) <= (HistoryBit <= not History(to_integer(unsigned(BranchSourceAddress(AddrBits-1 downto 0)))).HistoryBit,
+					History(to_integer(unsigned(BranchSourceAddress(AddrBits-1 downto 0)))) <= (HistoryBit <= ShouldBranch,
 					SourceAddr <= BranchSourceAddress,
 					TargetAddr <= BranchTargetAddress);
 				end if;
