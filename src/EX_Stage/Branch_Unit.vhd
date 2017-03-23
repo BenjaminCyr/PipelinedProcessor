@@ -6,6 +6,7 @@
 
 library IEEE;
 use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
 
 entity Branch_Unit is
 	generic (RegWidth : integer := 16);
@@ -25,15 +26,17 @@ entity Branch_Unit is
 end entity Branch_Unit;
 
 architecture Branch_Unit_Behavior of Branch_Unit is
+	signal Prediction_Miss_Sig : std_logic;
 	begin
 		ShouldBranch <= '1' when Branch = '1' and 
 						((BEQ_BNE = '0' and Zero = '1') or 
 						(BEQ_BNE = '1' and Zero = '0')) else
 						'0';
-		PredictionMiss <= ShouldBranch xor BranchTaken;
-		BranchTargetAddr <= RegData when JumpReg = '1' else
+		Prediction_Miss_Sig <= Should_Branch xor Branch_Taken;
+		Branch_Target_Addr <= RegData when JumpReg = '1' else
 							std_logic_vector(unsigned(PC)+unsigned(Imm)) 
 							when ShouldBranch = '1' else 
 							PC;
-		Flush <= Prediction_Miss or JumpReg;
+		Flush <= Prediction_Miss_Sig or JumpReg;
+		Prediction_Miss <= Prediction_Miss_Sig;
 end architecture Branch_Unit_Behavior;
