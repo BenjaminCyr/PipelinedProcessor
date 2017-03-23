@@ -12,12 +12,12 @@ entity Instruction_Memory is
 			 AddrBits : integer := 16);
 	port (
 		ReadAddr: in std_logic_vector(AddrBits-1 downto 0);
-		ReadData: out std_logic_vector(RegWidth-1 downto 0));
+		ReadData: out std_logic_vector(DataWidth-1 downto 0));
 end entity Instruction_Memory;
 
 architecture Instruction_Memory_Behavior of Instruction_Memory is
-	constant zero_reg : std_logic_vector(AddrBits-1 downto 0) := (others <= '0');
-	subtype WORD is std_logic_vector(RegWidth-1 downto 0);
+	constant zero_reg : std_logic_vector(AddrBits-1 downto 0) := (others => '0');
+	subtype WORD is std_logic_vector(DataWidth-1 downto 0);
 	type MEMORY is array(1 to 2**AddrBits - 1) of WORD;
 	signal registers: MEMORY := (others=> (others => '0'));
 	begin

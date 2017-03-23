@@ -25,11 +25,13 @@ entity PC_Muxes is
 end entity PC_Muxes;
 
 architecture PC_Muxes_Behavior of PC_Muxes is
+    signal PCPlusOne_Sig : std_logic_vector(DataWidth-1 downto 0);
 	begin
-		PCPlusOne <= std_logic_vector(unsigned(PC)+1);
+		PCPlusOne_Sig <= std_logic_vector(unsigned(PC)+1);
+		PCPlusOne <= PCPlusOne_Sig;
 		NextPC <= OverwriteAddress when PCOverwrite = '1' else
-					PC when Halt = '1' or Stall '1' else
+					PC when Halt = '1' or Stall = '1' else
 					JumpTarget when TakeJump = '1' else
 					BranchTarget when TakeBranch = '1' else
-					PCPlusOne;
+					PCPlusOne_Sig;
 end architecture PC_Muxes_Behavior;
