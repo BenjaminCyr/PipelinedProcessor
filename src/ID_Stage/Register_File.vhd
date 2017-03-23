@@ -42,7 +42,7 @@ architecture Register_File_Behavior of Register_File is
 			if rising_edge(CLK) then
 				if RST = '1' then
 					registers <= (others => (others => '0'));
-				elsif WriteEN = '1' then
+				elsif WriteEN = '1' and not WriteAddr = zero_reg then
 					registers(to_integer(UNSIGNED(WriteAddr))) <= WriteData;
 				end if;
 			end if;
