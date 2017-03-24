@@ -16,10 +16,6 @@ entity Instruction_Memory is
 end entity Instruction_Memory;
 
 architecture Instruction_Memory_Behavior of Instruction_Memory is
-	constant zero_reg : std_logic_vector(AddrBits-1 downto 0) := (others => '0');
-	subtype WORD is std_logic_vector(DataWidth-1 downto 0);
-	type MEMORY is array(1 to 2**AddrBits - 1) of WORD;
-	signal registers: MEMORY := (others=> (others => '0'));
 	begin
 		with ReadAddr select ReadData <=
 			x"0000" when x"0000",
