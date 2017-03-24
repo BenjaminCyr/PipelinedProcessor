@@ -17,7 +17,7 @@ entity PC_Register is
 end entity PC_Register;
 
 architecture PC_Register_Behavior of PC_Register is
-	signal PC: std_logic_vector(ControlBits-1 downto 0);
+	signal PC: std_logic_vector(RegWidth-1 downto 0);
 	begin
 		PC_Out <= PC;
 		process(CLK)
