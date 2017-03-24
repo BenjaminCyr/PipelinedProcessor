@@ -28,7 +28,7 @@ end entity Register_File;
 architecture Register_File_Behavior of Register_File is
 	constant zero_reg : std_logic_vector(AddrBits-1 downto 0) := (others => '0');
 	subtype WORD is std_logic_vector(RegWidth-1 downto 0);
-	type MEMORY is array(1 to 2**AddrBits - 1) of WORD;
+	type MEMORY is array(0 to 2**AddrBits - 1) of WORD;
 	signal registers: MEMORY := (others=> (others => '0'));
 	begin
 		ReadData1 <= (others => '0') when ReadAddr1 = zero_reg else 
@@ -42,7 +42,7 @@ architecture Register_File_Behavior of Register_File is
 			if rising_edge(CLK) then
 				if RST = '1' then
 					registers <= (others => (others => '0'));
-				elsif WriteEN = '1' then
+				elsif WriteEN = '1' and not WriteAddr = zero_reg then
 					registers(to_integer(UNSIGNED(WriteAddr))) <= WriteData;
 				end if;
 			end if;
