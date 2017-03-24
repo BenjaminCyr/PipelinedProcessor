@@ -27,7 +27,7 @@ PC_Muxes p1 (
 	.PC(PC),
 	.BranchTarget(BranchTarget),
 	.OverwriteAddress(OverwriteAddress),
-	.JumpTarget(Jump_target),
+	.JumpTarget(JumpTarget),
 	.PCPlusOne(PCPlusOne),
 	.NextPC(NextPC)
 );
