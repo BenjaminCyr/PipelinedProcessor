@@ -1,62 +1,42 @@
 // Testbench Code Goes here
 module Link_Muxes_tb;
 
-reg RegDst, ALUSrc; 
-reg[2:0] Rt, Rd;
-wire [2:0] DestReg;
-reg [1:0] ForwardA, ForwardB;
-reg [15:0] Mem_ALUOut, WB_WriteData, ReadData1, ReadData2, Imm;
-wire [15:0] Operand1, Operand2;
-integer i;
+reg Link; 
+reg[2:0] DestReg_In;
+reg [15:0] ALUOut_In, PC;
+wire [2:0] DestReg_Out;
+wire [15:0] ALUOut_Out;
 
 initial begin
-  $display ("Time,RegDst,Rt,Rd,DestReg,ALUSrc,ForwardA,ForwardB,Mem_ALUOut,WB_WriteData,ReadData1,ReadData2,Imm,Operand1,Operand2,");
-  $monitor ("%0d,%b,%b,%b,%b,%b,%b,%b,%h,%h,%h,%h,%h,%h,%h,", $time, RegDst,Rt,Rd,DestReg,ALUSrc,
-                    ForwardA,ForwardB,Mem_ALUOut,WB_WriteData,ReadData1,ReadData2,Imm,Operand1,Operand2);
-  RegDst = 0;
-  Rt = 1;
-  Rd = 2;
-  ALUSrc = 0;
-  ForwardA = 2'b00;
-  ForwardB = 2'b00;
-  ReadData1 = 16'h1111;
-  ReadData2 = 16'h2222;
-  Mem_ALUOut = 16'hAAAA;
-  WB_WriteData = 16'hBBBB;
-  Imm = 16'hFFFF;
+  $display ("Time,Link,DestReg_In,DestReg_Out,ALUOut_In,ALUOut_Out,PC,");
+  $monitor ("%0d,%b,%b,%b,%h,%h,%h", $time, Link,
+                DestReg_In,DestReg_Out,ALUOut_In,ALUOut_Out,PC);
+  Link = 0;
+  DestReg_In = 0;
+  ALUOut_In = 'h0000;
+  PC = 'hFFFF;
   #5;
-  RegDst = 1;
-  ALUSrc = 1;
-  ForwardB = 2'b01;
+  DestReg_In = 1;
+  ALUOut_In = 'h1111;
   #5;
-  ALUSrc = 0;
-  ForwardA = 2'b10;
+  Link = 1;
+  DestReg_In = 2;
+  ALUOut_In = 'h2222;
   #5;
-  ForwardA = 2'b01;
-  ForwardB = 2'b10;
-  #5;
-  RegDst = 0;
-  ForwardA = 2'b00;
-  ForwardB = 2'b00;
+  Link = 0;
+  DestReg_In = 3;
+  ALUOut_In = 'h3333;
   #5;
   $finish;
 end
 
-ALU_Muxes U0 (
-    .RegDst (RegDst),
-    .Rt (Rt),
-	.Rd (Rd), 
-	.DestReg (DestReg),
-	.ALUSrc (ALUSrc),
-	.ForwardA (ForwardA), 
-    .ForwardB (ForwardB),
-    .Mem_ALUOut (Mem_ALUOut),
-    .WB_WriteData (WB_WriteData),
-    .ReadData1 (ReadData1), 
-    .ReadData2 (ReadData2),
-    .Imm (Imm),
-    .Operand1 (Operand1), 
-    .Operand2 (Operand2)
+Link_Muxes U0 (
+    .Link (Link),
+    .DestReg_In (DestReg_In),
+	.DestReg_Out (DestReg_Out), 
+	.ALUOut_In (ALUOut_In),
+	.ALUOut_Out (ALUOut_Out),
+	.PC (PC)
 );
 
 endmodule

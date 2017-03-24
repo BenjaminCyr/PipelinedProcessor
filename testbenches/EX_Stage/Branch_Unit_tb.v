@@ -1,62 +1,63 @@
 // Testbench Code Goes here
 module Branch_Unit_tb;
 
-reg RegDst, ALUSrc; 
-reg[2:0] Rt, Rd;
-wire [2:0] DestReg;
-reg [1:0] ForwardA, ForwardB;
-reg [15:0] Mem_ALUOut, WB_WriteData, ReadData1, ReadData2, Imm;
-wire [15:0] Operand1, Operand2;
+reg BranchTaken, Branch, BEQ_BNE, Zero, JumpReg; 
+reg [15:0] PC, Imm, RegData;
+wire ShouldBranch, PredictionMiss, Flush;
+wire [15:0] BranchTargetAddr;
 integer i;
 
 initial begin
-  $display ("Time,RegDst,Rt,Rd,DestReg,ALUSrc,ForwardA,ForwardB,Mem_ALUOut,WB_WriteData,ReadData1,ReadData2,Imm,Operand1,Operand2,");
-  $monitor ("%0d,%b,%b,%b,%b,%b,%b,%b,%h,%h,%h,%h,%h,%h,%h,", $time, RegDst,Rt,Rd,DestReg,ALUSrc,
-                    ForwardA,ForwardB,Mem_ALUOut,WB_WriteData,ReadData1,ReadData2,Imm,Operand1,Operand2);
-  RegDst = 0;
-  Rt = 1;
-  Rd = 2;
-  ALUSrc = 0;
-  ForwardA = 2'b00;
-  ForwardB = 2'b00;
-  ReadData1 = 16'h1111;
-  ReadData2 = 16'h2222;
-  Mem_ALUOut = 16'hAAAA;
-  WB_WriteData = 16'hBBBB;
-  Imm = 16'hFFFF;
+  $display ("Time,BranchTaken,Branch,BEQ_BNE,Zero,JumpReg,PC,Imm,RegData,ShouldBranch,PredictionMiss,Flush,BranchTargetAddr,");
+  $monitor ("%0d,%b,%b,%b,%b,%b,%h,%h,%h,%b,%b,%b,%h,", $time, BranchTaken,Branch,BEQ_BNE,Zero,JumpReg,PC,Imm,RegData,
+                ShouldBranch,PredictionMiss,Flush,BranchTargetAddr);
+
+  BranchTaken = 0;
+  Branch = 0;
+  BEQ_BNE = 0;
+  Zero = 0;
+  JumpReg = 0;
+  PC = 'h0001;
+  Imm = 'h000F;
+  RegData = 'hFFFF;
+  #5; 
+  Zero = 1;
   #5;
-  RegDst = 1;
-  ALUSrc = 1;
-  ForwardB = 2'b01;
+  BEQ_BNE = 1;
   #5;
-  ALUSrc = 0;
-  ForwardA = 2'b10;
+  Branch = 1;
+  BEQ_BNE = 0;
+  Zero = 1;
   #5;
-  ForwardA = 2'b01;
-  ForwardB = 2'b10;
+  BranchTaken = 1;
   #5;
-  RegDst = 0;
-  ForwardA = 2'b00;
-  ForwardB = 2'b00;
+  BEQ_BNE = 1;
+  #5;
+  Zero = 0;
+  #5;
+  JumpReg = 1;
+  #5;
+  JumpReg = 0;
+  Branch = 0;
+  BranchTaken = 0;
+  BEQ_BNE = 0;
   #5;
   $finish;
 end
 
-ALU_Muxes U0 (
-    .RegDst (RegDst),
-    .Rt (Rt),
-	.Rd (Rd), 
-	.DestReg (DestReg),
-	.ALUSrc (ALUSrc),
-	.ForwardA (ForwardA), 
-    .ForwardB (ForwardB),
-    .Mem_ALUOut (Mem_ALUOut),
-    .WB_WriteData (WB_WriteData),
-    .ReadData1 (ReadData1), 
-    .ReadData2 (ReadData2),
+Branch_Unit U0 (
+    .BranchTaken (BranchTaken),
+    .Branch (Branch),
+	.BEQ_BNE (BEQ_BNE), 
+	.Zero (Zero),
+	.PC (PC),
+	.JumpReg (JumpReg), 
     .Imm (Imm),
-    .Operand1 (Operand1), 
-    .Operand2 (Operand2)
+    .RegData (RegData),
+    .ShouldBranch (ShouldBranch),
+    .PredictionMiss (PredictionMiss), 
+    .BranchTargetAddr (BranchTargetAddr),
+    .Flush (Flush)
 );
 
 endmodule

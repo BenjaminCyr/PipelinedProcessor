@@ -1,62 +1,110 @@
 // Testbench Code Goes here
 module ID_EX_Register_tb;
 
-reg RegDst, ALUSrc; 
-reg[2:0] Rt, Rd;
-wire [2:0] DestReg;
-reg [1:0] ForwardA, ForwardB;
-reg [15:0] Mem_ALUOut, WB_WriteData, ReadData1, ReadData2, Imm;
-wire [15:0] Operand1, Operand2;
-integer i;
+reg CLK, RST, Stall, Flush, Branch_Taken_In; 
+reg[12:0] Control_In;
+reg[15:0] PC_In, ReadData1_In, ReadData2_In, Imm_In;
+reg [2:0] Rs_In, Rt_In, Rd_In;
+wire Branch_Taken_Out; 
+wire[12:0] Control_Out;
+wire[15:0] PC_Out, ReadData1_Out, ReadData2_Out, Imm_Out;
+wire [2:0] Rs_Out, Rt_Out, Rd_Out;
 
 initial begin
-  $display ("Time,RegDst,Rt,Rd,DestReg,ALUSrc,ForwardA,ForwardB,Mem_ALUOut,WB_WriteData,ReadData1,ReadData2,Imm,Operand1,Operand2,");
-  $monitor ("%0d,%b,%b,%b,%b,%b,%b,%b,%h,%h,%h,%h,%h,%h,%h,", $time, RegDst,Rt,Rd,DestReg,ALUSrc,
-                    ForwardA,ForwardB,Mem_ALUOut,WB_WriteData,ReadData1,ReadData2,Imm,Operand1,Operand2);
-  RegDst = 0;
-  Rt = 1;
-  Rd = 2;
-  ALUSrc = 0;
-  ForwardA = 2'b00;
-  ForwardB = 2'b00;
-  ReadData1 = 16'h1111;
-  ReadData2 = 16'h2222;
-  Mem_ALUOut = 16'hAAAA;
-  WB_WriteData = 16'hBBBB;
-  Imm = 16'hFFFF;
-  #5;
-  RegDst = 1;
-  ALUSrc = 1;
-  ForwardB = 2'b01;
-  #5;
-  ALUSrc = 0;
-  ForwardA = 2'b10;
-  #5;
-  ForwardA = 2'b01;
-  ForwardB = 2'b10;
-  #5;
-  RegDst = 0;
-  ForwardA = 2'b00;
-  ForwardB = 2'b00;
-  #5;
+  $display ("Time,CLK,RST,Stall,Flush,Control_In,Control_Out,Branch_Taken_In,Branch_Taken_Out,PC_In,PC_Out,ReadData1_In,ReadData1_Out,ReadData2_In,ReadData2_Out,Imm_In,Imm_Out,Rs_In,Rs_Out,Rt_In,Rt_Out,Rd_In,Rd_Out");
+  $monitor ("%0d,%b,%b,%b,%b,%h,%h,%b,%b,%h,%h,%h,%h,%h,%h,%h,%h,%b,%b,%b,%b,%b,%b,", $time, CLK,RST,Stall,Flush,Control_In,Control_Out,Branch_Taken_In,Branch_Taken_Out,PC_In,PC_Out,ReadData1_In,
+                ReadData1_Out,ReadData2_In,ReadData2_Out,Imm_In,Imm_Out,Rs_In,Rs_Out,Rt_In,Rt_Out,Rd_In,Rd_Out);
+  CLK = 0;
+  RST = 1;
+  Stall = 0;
+  Flush = 0;
+  Branch_Taken_In = 0;
+  Control_In = 'h1FFF;
+  PC_In = 'hAAAA;
+  ReadData1_In = 'h1111;
+  ReadData2_In = 'h2222;
+  Imm_In = 'hBBBB;
+  Rs_In = 1;
+  Rt_In = 2;
+  Rd_In = 3;
+  
+  #10;
+  RST = 0;
+  
+  #10;
+  Branch_Taken_In = 1;
+  Control_In = 'h1000;
+  PC_In = 'hCCCC;
+  ReadData1_In = 'h3333;
+  ReadData2_In = 'h4444;
+  Imm_In = 'hDDDD;
+  Rs_In = 5;
+  Rt_In = 6;
+  Rd_In = 7;
+  
+  #10;
+  Stall = 1;
+  
+  #10;
+  Stall = 0;
+  Branch_Taken_In = 0;
+  Control_In = 'h1FFF;
+  PC_In = 'hAAAA;
+  ReadData1_In = 'h1111;
+  ReadData2_In = 'h2222;
+  Imm_In = 'hBBBB;
+  Rs_In = 1;
+  Rt_In = 2;
+  Rd_In = 3;
+  
+  #10;
+  Flush = 1;
+  
+  #10;
+  Flush = 0;
+  Branch_Taken_In = 0;
+  Control_In = 'h1FFF;
+  PC_In = 'hAAAA;
+  ReadData1_In = 'h1111;
+  ReadData2_In = 'h2222;
+  Imm_In = 'hBBBB;
+  Rs_In = 1;
+  Rt_In = 2;
+  Rd_In = 3;
+  
+  #10;
+  RST = 1;
+  #10;
   $finish;
 end
 
-ALU_Muxes U0 (
-    .RegDst (RegDst),
-    .Rt (Rt),
-	.Rd (Rd), 
-	.DestReg (DestReg),
-	.ALUSrc (ALUSrc),
-	.ForwardA (ForwardA), 
-    .ForwardB (ForwardB),
-    .Mem_ALUOut (Mem_ALUOut),
-    .WB_WriteData (WB_WriteData),
-    .ReadData1 (ReadData1), 
-    .ReadData2 (ReadData2),
-    .Imm (Imm),
-    .Operand1 (Operand1), 
-    .Operand2 (Operand2)
+always begin
+  #5 CLK = !CLK;
+end
+
+ID_EX_Register U0 (
+    .CLK (CLK),
+    .RST (RST),
+	.Stall (Stall), 
+	.Flush (Flush),
+	.Control_In (Control_In),
+	.Control_Out (Control_Out), 
+    .Branch_Taken_In (Branch_Taken_In),
+    .Branch_Taken_Out (Branch_Taken_Out),
+    .PC_In (PC_In),
+    .PC_Out (PC_Out), 
+    .ReadData1_In (ReadData1_In),
+    .ReadData1_Out (ReadData1_Out),
+    .ReadData2_In (ReadData2_In), 
+    .ReadData2_Out (ReadData2_Out),
+    .Imm_In (Imm_In),
+    .Imm_Out (Imm_Out), 
+    .Rs_In (Rs_In),
+    .Rs_Out (Rs_Out),
+    .Rt_In (Rt_In), 
+    .Rt_Out (Rt_Out),
+    .Rd_In (Rd_In), 
+    .Rd_Out (Rd_Out)
 );
 
 endmodule
