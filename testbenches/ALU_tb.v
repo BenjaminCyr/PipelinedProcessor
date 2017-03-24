@@ -8,8 +8,8 @@ wire Zero;
 integer i;
 
 initial begin
-  $display ("Time,ALUOp,Operand1,Operand2,ALUOut,Zero,");
-  $monitor ("%0d,%b,%b %3d,%b %3d,%b %3d,%b,", $time, ALUOp,Operand1,Operand1,Operand2,Operand2,ALUOut,ALUOut,Zero);
+  $display ("Time,ALUOp,Operand1,,Operand2,,ALUOut,,Zero,");
+  $monitor ("%0d,%b,%b,%d,%b,%d,%b,%d,%b,", $time, ALUOp,Operand1,Operand1,Operand2,Operand2,ALUOut,ALUOut,Zero);
   Operand1 = 0;
   Operand2 = 0;
   for (i=0; i<8; i=i+1) begin
