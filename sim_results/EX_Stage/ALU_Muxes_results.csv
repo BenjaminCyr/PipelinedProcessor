@@ -1,0 +1,6 @@
+Time,RegDst,Rt,Rd,DestReg,ALUSrc,ForwardA,ForwardB,Mem_ALUOut,WB_WriteData,ReadData1,ReadData2,Imm,Operand1,Operand2,
+0,0,001,010,001,0,00,00,aaaa,bbbb,1111,2222,ffff,1111,2222,
+5,1,001,010,010,1,00,01,aaaa,bbbb,1111,2222,ffff,1111,ffff,
+10,1,001,010,010,0,10,01,aaaa,bbbb,1111,2222,ffff,bbbb,aaaa,
+15,1,001,010,010,0,01,10,aaaa,bbbb,1111,2222,ffff,aaaa,bbbb,
+20,0,001,010,001,0,00,00,aaaa,bbbb,1111,2222,ffff,1111,2222,
