@@ -1,0 +1,16 @@
+0 ns :: Opcode=0000, Control_Signals=0000000000000
+10 ns :: Opcode=0001, Control_Signals=0010100000010
+20 ns :: Opcode=0010, Control_Signals=0100100000010
+30 ns :: Opcode=0011, Control_Signals=0110100000010
+40 ns :: Opcode=0100, Control_Signals=1000100000010
+50 ns :: Opcode=0101, Control_Signals=1010100000010
+60 ns :: Opcode=0110, Control_Signals=1101000000010
+70 ns :: Opcode=0111, Control_Signals=1111000000010
+80 ns :: Opcode=1000, Control_Signals=0011000000010
+90 ns :: Opcode=1001, Control_Signals=0011000001000
+100 ns :: Opcode=1010, Control_Signals=0011000000111
+110 ns :: Opcode=1011, Control_Signals=0100011000000
+120 ns :: Opcode=1100, Control_Signals=0100010000000
+130 ns :: Opcode=1101, Control_Signals=0000000010010
+140 ns :: Opcode=1110, Control_Signals=0000000000000
+150 ns :: Opcode=1111, Control_Signals=0000000100000

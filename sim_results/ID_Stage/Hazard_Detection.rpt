@@ -1,0 +1,3 @@
+0 ns :: IF_ID_Rs=000, IF_ID_Rt=000, ID_EX_Rt=000, ID_EX_MemRead=0, Stall=0
+10 ns :: IF_ID_Rs=010, IF_ID_Rt=011, ID_EX_Rt=100, ID_EX_MemRead=1, Stall=0
+20 ns :: IF_ID_Rs=010, IF_ID_Rt=011, ID_EX_Rt=011, ID_EX_MemRead=1, Stall=1

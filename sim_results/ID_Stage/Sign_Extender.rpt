@@ -1,0 +1,5 @@
+0 ns :: Input=xxxxxx, Output=xxxxxxxxxxxxxxxx
+5 ns :: Input=000101, Output=0000000000000101
+10 ns :: Input=011111, Output=0000000000011111
+15 ns :: Input=101100, Output=1111111111101100
+20 ns :: Input=100010, Output=1111111111100010

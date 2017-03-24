@@ -1,0 +1,8 @@
+0 ns :: CLK=0, RST=0, Stall=0, Flush=0, Instruction_In=0000000000000000, Instruction_Out=xxxxxxxxxxxxxxxx, PC_In=0000000000000000, PC_Out=xxxxxxxxxxxxxxxx, Branch_Taken_In=0, Branch_Taken_Out=x
+5 ns :: CLK=1, RST=0, Stall=0, Flush=0, Instruction_In=0000000000000000, Instruction_Out=0000000000000000, PC_In=0000000000000000, PC_Out=0000000000000000, Branch_Taken_In=0, Branch_Taken_Out=0
+10 ns :: CLK=0, RST=0, Stall=0, Flush=0, Instruction_In=0000000000100100, Instruction_Out=0000000000000000, PC_In=0000000000110110, PC_Out=0000000000000000, Branch_Taken_In=1, Branch_Taken_Out=0
+15 ns :: CLK=1, RST=0, Stall=0, Flush=0, Instruction_In=0000000000100100, Instruction_Out=0000000000100100, PC_In=0000000000110110, PC_Out=0000000000110110, Branch_Taken_In=1, Branch_Taken_Out=1
+20 ns :: CLK=0, RST=0, Stall=1, Flush=0, Instruction_In=0000000000011001, Instruction_Out=0000000000100100, PC_In=0000000001001110, PC_Out=0000000000110110, Branch_Taken_In=0, Branch_Taken_Out=1
+25 ns :: CLK=1, RST=0, Stall=1, Flush=0, Instruction_In=0000000000011001, Instruction_Out=0000000000100100, PC_In=0000000001001110, PC_Out=0000000000110110, Branch_Taken_In=0, Branch_Taken_Out=1
+30 ns :: CLK=0, RST=0, Stall=1, Flush=1, Instruction_In=0000000000011001, Instruction_Out=0000000000100100, PC_In=0000000001001110, PC_Out=0000000000110110, Branch_Taken_In=0, Branch_Taken_Out=1
+35 ns :: CLK=1, RST=0, Stall=1, Flush=1, Instruction_In=0000000000011001, Instruction_Out=0000000000000000, PC_In=0000000001001110, PC_Out=0000000000000000, Branch_Taken_In=0, Branch_Taken_Out=0
