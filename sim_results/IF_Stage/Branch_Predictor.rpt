@@ -1,1 +1,4 @@
-testbench not complete, check mail in the morning
+0 ns :: CLK=0, RST=0, PredictionMiss=0, Instruction=0000000000000000, PCPlusOne=0000000000000000, ShouldBranch=0, BranchSourceAddress=0000000000000000, BranchTargetAddress=0000000000000000, PredictedAddress=0000000000000000, TakeBranch=0
+5 ns :: CLK=1, RST=0, PredictionMiss=0, Instruction=0000000000000000, PCPlusOne=0000000000000000, ShouldBranch=0, BranchSourceAddress=0000000000000000, BranchTargetAddress=0000000000000000, PredictedAddress=0000000000000000, TakeBranch=0
+10 ns :: CLK=0, RST=0, PredictionMiss=1, Instruction=1100001001110000, PCPlusOne=0000000000001010, ShouldBranch=1, BranchSourceAddress=0000000000001010, BranchTargetAddress=0000000000010100, PredictedAddress=0000000000000000, TakeBranch=0
+15 ns :: CLK=1, RST=0, PredictionMiss=1, Instruction=1100001001110000, PCPlusOne=0000000000001010, ShouldBranch=1, BranchSourceAddress=0000000000001010, BranchTargetAddress=0000000000010100, PredictedAddress=0000000000010100, TakeBranch=1
