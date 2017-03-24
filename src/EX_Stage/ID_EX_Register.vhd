@@ -50,8 +50,8 @@ architecture ID_EX_Register_Behavior of ID_EX_Register is
 		Control_Out <= Control;
 		Branch_Taken_Out <= Branch_Taken;
 		PC_Out <= PC;
-		ReadData1_Out <= Reg1;
-		ReadData2_Out <= Reg2;
+		ReadData1_Out <= ReadData1;
+		ReadData2_Out <= ReadData2;
 		Imm_Out <= Imm;
 		Rs_Out <= Rs;
 		Rt_Out <= Rt;
