@@ -18,33 +18,33 @@ entity IF_ID_Register is
 		Instruction_Out: out std_logic_vector(InstrWidth-1 downto 0);
 		PC_In: in std_logic_vector(InstrWidth-1 downto 0);
 		PC_Out: out std_logic_vector(InstrWidth-1 downto 0);
-		Branch_Taken_In: in std_logic;
-		Branch_Taken_Out: out std_logic);
+		BranchTaken_In: in std_logic;
+		BranchTaken_Out: out std_logic);
 end entity IF_ID_Register;
 
 architecture IF_ID_Register_Behavior of IF_ID_Register is
 	signal Instruction: std_logic_vector(InstrWidth-1 downto 0);
 	signal PC: std_logic_vector(InstrWidth-1 downto 0);
-	signal Branch_Taken: std_logic;
+	signal BranchTaken: std_logic;
 	begin
 		Instruction_Out <= Instruction;
 		PC_Out <= PC;
-		Branch_Taken_Out <= Branch_Taken;
+		BranchTaken_Out <= BranchTaken;
 		process(CLK)
 		begin
 			if rising_edge(CLK) then
 				if RST = '1' or Flush = '1' then
 					Instruction <= (others => '0');
 					PC <= (others => '0');
-					Branch_Taken <= '0';
+					BranchTaken <= '0';
 				elsif Stall = '1' then
 					Instruction <= Instruction;
 					PC <= PC;
-					Branch_Taken <= Branch_Taken;
+					BranchTaken <= BranchTaken;
 				else 
 					Instruction <= Instruction_In;
 					PC <= PC_In;
-					Branch_Taken <= Branch_Taken_In;
+					BranchTaken <= BranchTaken_In;
 				end if;
 			end if;
 		end process;
