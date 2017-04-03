@@ -26,6 +26,10 @@ architecture WB_Stage_Behavior of WB_Stage is
 	signal MemOut_Out : std_logic_vector(RegWidth-1 downto 0);
 	signal ALUOut_Out : std_logic_vector(RegWidth-1 downto 0);
 	signal DestReg_Out : std_logic_vector(AddrBits-1 downto 0);
+	signal MemToReg : std_logic;
+
+	MemToReg <= Control_Out(0);
+	RegWrite <= Control_Out(1);
 
 	MEM_WB_Reg : entity MEM_WB_Register 
 				generic map (RegWidth, ControlBits, AddrBits) 
@@ -35,9 +39,7 @@ architecture WB_Stage_Behavior of WB_Stage is
 	
 	WB_Mux : entity WriteBack_Mux 
 				generic map (RegWidth)
-				port map (Control_Out(0), MemOut_Out,
+				port map (MemToReg, MemOut_Out,
 					ALUOut_Out, WriteData);
 	
-	RegWrite <= Control_Out(1);
-
 end architecture WB_Stage_Behavior;

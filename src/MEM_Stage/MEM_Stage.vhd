@@ -35,16 +35,16 @@ architecture MEM_Stage_Behavior of MEM_Stage is
 	signal MemData : std_logic_vector (RegWidth-1 downto 0);
 	signal Control : std_logic_vector (ControlBits_In-1 downto 0);
 
+	MemWrite <= Control(3);
+	MemRead <= Control(2);
+	Control_Out <= Control(1 downto 0);
+	RegWrite <= Control(1);
+
 	EX_MEM_Reg : entity EX_MEM_Register 
 				generic map (RegWidth, ControlBits_In, AddrBits) 
 				port map ( CLK, RST, Control_In, Control, 
 					ALUOut_In, ALUOut_Out, MemData_In, MemData_Out, 
 					DestReg_In, DestReg_Out);
-	
-	MemWrite <= Control(3);
-	MemRead <= Control(2);
-	Control_Out <= Control(1 downto 0);
-	RegWrite <= Control(1);
 
 	MemOut_Out <= MemOut_In;
 end architecture MEM_Stage_Behavior;

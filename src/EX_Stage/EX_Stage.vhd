@@ -78,6 +78,15 @@ architecture EX_Stage_Behavior of EX_Stage is
 	signal ForwardA : std_logic_vector (1 downto 0);
 	signal ForwardB : std_logic_vector (1 downto 0);
 
+	ALUOp <= Control(12 downto 10);
+	ALUSrc <= Control(9);
+	RegDst <= Control(8);
+	Branch <= Control(7);
+	BEQ_BNE <= Control(6);
+	JumpReg <= Control(5);
+	Link <= Control(4);
+	MemRead <= Control(2);
+	Control_Out <= Control(3 downto 0);
 
 	EX_MEM_Reg : entity EX_MEM_Register 
 				generic map (RegWidth, ControlBits_In, AddrBits) 
@@ -115,16 +124,5 @@ architecture EX_Stage_Behavior of EX_Stage is
 						PredictionMiss, BranchTargetAddr, Flush);
 	
 	BranchSourceAddr <= PC;
-
-	ALUOp <= Control(12 downto 10);
-	ALUSrc <= Control(9);
-	RegDst <= Control(8);
-	Branch <= Control(7);
-	BEQ_BNE <= Control(6);
-	JumpReg <= Control(5);
-	Link <= Control(4);
-	MemRead <= Control(2);
-	Control_Out <= Control(3 downto 0);
-
 	Rt_Out <= Rt;
 end architecture EX_Stage_Behavior;
