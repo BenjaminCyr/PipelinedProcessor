@@ -37,7 +37,7 @@ architecture ALU_Muxes_Behavior of ALU_Muxes is
 					ReadData1;
 		Fw_Operand <= WB_WriteData when ForwardB = "10" else
 					Mem_ALUOut when ForwardA = "01" else
-					ReadData2
+					ReadData2;
 		Operand2 <= Imm when ALUSrc = '1' else 
 					Fw_Operand;
 		MemData <= Fw_Operand;

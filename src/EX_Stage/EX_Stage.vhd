@@ -3,6 +3,8 @@
 -- Created By: 	Benjamin Cyr
 -- Date: 		April 3, 2017	
 ---------------------------------------------
+library IEEE;
+use IEEE.std_logic_1164.all;
 
 entity EX_Stage is
 	generic (RegWidth : integer := 16;
@@ -18,7 +20,7 @@ entity EX_Stage is
 		Control_Out: out std_logic_vector(ControlBits_Out-1 downto 0);
 		BranchTaken_In: in std_logic;
 
-		Flush: out std_logic;
+		Flush_Out: out std_logic;
 		ShouldBranch: out std_logic;
 		BranchSourceAddr: out std_logic_vector(RegWidth-1 downto 0);
 		BranchTargetAddr: out std_logic_vector(RegWidth-1 downto 0);
@@ -28,8 +30,8 @@ entity EX_Stage is
 		ReadData1_In: in std_logic_vector(RegWidth-1 downto 0);
 		ReadData2_In: in std_logic_vector(RegWidth-1 downto 0);
 		Imm_In: in std_logic_vector(RegWidth-1 downto 0);
-		ALUOut out std_logic_vector(RegWidth-1 downto 0);
-		MemData out std_logic_vector(RegWidth-1 downto 0);
+		ALUOut: out std_logic_vector(RegWidth-1 downto 0);
+		MemData: out std_logic_vector(RegWidth-1 downto 0);
 
 		Rs_In: in std_logic_vector(AddrBits-1 downto 0);
 		Rt_In: in std_logic_vector(AddrBits-1 downto 0);
@@ -72,56 +74,58 @@ architecture EX_Stage_Behavior of EX_Stage is
 	signal Operand2 : std_logic_vector (RegWidth-1 downto 0);
 
 	signal Link_Mux_In : std_logic_vector (RegWidth-1 downto 0);
-	signal Zero : std_logic_vector (RegWidth-1 downto 0);
+	signal Zero : std_logic;
+	signal Flush : std_logic;
 
 	signal ForwardA : std_logic_vector (1 downto 0);
 	signal ForwardB : std_logic_vector (1 downto 0);
-
-	ALUOp <= Control(12 downto 10);
-	ALUSrc <= Control(9);
-	RegDst <= Control(8);
-	Branch <= Control(7);
-	BEQ_BNE <= Control(6);
-	JumpReg <= Control(5);
-	Link <= Control(4);
-	MemRead <= Control(2);
-	Control_Out <= Control(3 downto 0);
-
-	EX_MEM_Reg : entity EX_MEM_Register 
-				generic map (RegWidth, ControlBits_In, AddrBits) 
-				port map ( CLK, RST, Stall, Flush, Control_In, Control, 
-					BranchTaken_In, BranchTaken, PC_In, PC, 
-					ReadData1_In, ReadData1, ReadData2_In, ReadData2, 
-					Imm_In, Imm, Rs_In, Rs, Rt_In, Rt, Rd_In, Rd);
-	
-	ALU_Muxes : entity ALU_Muxes
-				generic map (AddrBits, RegWidth)
-				port map (RegDst, Rt, Rd, DestReg, 
-					ALUSrc, ForwardA, ForwardB, MEM_ALUOut,
-					WB_WriteData, ReadData1, ReadData2, Imm, 
-					Operand1, Operand2, MemData);
-
-	Forwarding_Unit : entity Forwarding_Unit
-						generic map (AddrBits)
-						port map (Rs, Rt, MEM_RegWrite, MEM_DestReg,
-							WB_RegWrite, WB_DestReg, ForwardA, ForwardB);
-
-	ALU : entity ALU
-			generic map (ALU_ControlBits, RegWidth)
-			port map (ALUOp, Operand1, Operand2,
-				Link_Mux_In, Zero);
-	
-	Link_Muxes : entity Link_Muxes
-					generic map (AddrBits, RegWidth)
-					port map (Link, DestReg, DestReg_Out, Link_Mux_In, 
-						ALUOut, PC);
-
-	Branch_Unit : entity Branch_Unit
-					generic map (RegWidth)
-					port map (BranchTaken, Branch, BEQ_BNE, Zero, PC, 
-						JumpReg, Imm, Operand1, ShouldBranch, 
-						PredictionMiss, BranchTargetAddr, Flush);
-	
-	BranchSourceAddr <= PC;
-	Rt_Out <= Rt;
+	begin
+        ALUOp <= Control(12 downto 10);
+        ALUSrc <= Control(9);
+        RegDst <= Control(8);
+        Branch <= Control(7);
+        BEQ_BNE <= Control(6);
+        JumpReg <= Control(5);
+        Link <= Control(4);
+        MemRead <= Control(2);
+        Control_Out <= Control(3 downto 0);
+    
+        ID_EX_Reg : entity work.ID_EX_Register 
+                    generic map (RegWidth, ControlBits_In, AddrBits) 
+                    port map ( CLK, RST, Stall, Flush, Control_In, Control, 
+                        BranchTaken_In, BranchTaken, PC_In, PC, 
+                        ReadData1_In, ReadData1, ReadData2_In, ReadData2, 
+                        Imm_In, Imm, Rs_In, Rs, Rt_In, Rt, Rd_In, Rd);
+        
+        ALU_Muxes : entity work.ALU_Muxes
+                    generic map (AddrBits, RegWidth)
+                    port map (RegDst, Rt, Rd, DestReg, 
+                        ALUSrc, ForwardA, ForwardB, MEM_ALUOut,
+                        WB_WriteData, ReadData1, ReadData2, Imm, 
+                        Operand1, Operand2, MemData);
+    
+        Forwarding_Unit : entity work.Forwarding_Unit
+                            generic map (AddrBits)
+                            port map (Rs, Rt, MEM_RegWrite, MEM_DestReg,
+                                WB_RegWrite, WB_DestReg, ForwardA, ForwardB);
+    
+        ALU : entity work.ALU
+                generic map (ALU_ControlBits, RegWidth)
+                port map (ALUOp, Operand1, Operand2,
+                    Link_Mux_In, Zero);
+        
+        Link_Muxes : entity work.Link_Muxes
+                        generic map (AddrBits, RegWidth)
+                        port map (Link, DestReg, DestReg_Out, Link_Mux_In, 
+                            ALUOut, PC);
+    
+        Branch_Unit : entity work.Branch_Unit
+                        generic map (RegWidth)
+                        port map (BranchTaken, Branch, BEQ_BNE, Zero, PC, 
+                            JumpReg, Imm, Operand1, ShouldBranch, 
+                            PredictionMiss, BranchTargetAddr, Flush);
+        
+        BranchSourceAddr <= PC;
+        Rt_Out <= Rt;
+        Flush_Out <= Flush;
 end architecture EX_Stage_Behavior;
