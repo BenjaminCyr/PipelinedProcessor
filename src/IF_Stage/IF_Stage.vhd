@@ -7,7 +7,8 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity IF_Stage is
-	generic (RegWidth : integer := 16;
+	generic (FileName : string := "instructions.txt";
+			RegWidth : integer := 16;
 	        OpcodeBits : integer := 4;
 			PredictorAddrBits : integer := 4);
 	port (
@@ -47,8 +48,8 @@ architecture IF_Stage_Behavior of IF_Stage is
                     port map (CLK, RST, NextPC, CurrentPC);
     
         Instr_Mem : entity work.Instruction_Memory
-                    generic map (RegWidth, RegWidth)
-                    port map (CurrentPC, Instruction);
+                    generic map (FileName, RegWidth, RegWidth)
+                    port map (not CLK, CurrentPC, Instruction);
     
         Jump_Logic : entity work.Jump_Logic
                         generic map (RegWidth)

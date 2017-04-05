@@ -7,7 +7,8 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity Pipelined_Processor is
-	generic (DataWidth : integer := 16;
+	generic (FileName : string := "instructions.txt";
+			DataWidth : integer := 16;
 			RegAddrBits : integer := 3;
 			PredictorAddrBits : integer := 4;
 			OpcodeBits : integer := 4;
@@ -69,7 +70,7 @@ architecture Pipelined_Processor_Behavior of Pipelined_Processor is
     begin
     
         IF_Stage : entity work.IF_Stage
-                generic map (DataWidth, PredictorAddrBits) 
+                generic map (FileName, DataWidth, PredictorAddrBits) 
                 port map (CLK, RST, ID_IF_EX_Stall, 
                     EX_IF_ID_PCOverwrite_Flush,
                     EX_IF_PredictionMiss, EX_IF_ShouldBranch,
