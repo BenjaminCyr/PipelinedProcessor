@@ -15,7 +15,6 @@ entity Branch_Predictor is
     	CLK: in std_logic;
 		RST: in std_logic; 
 		PredictionMiss: in std_logic;
-		Instruction: in std_logic_vector(DataWidth-1 downto 0);
 		PCPlusOne: in std_logic_vector(DataWidth-1 downto 0);
 		ShouldBranch: in std_logic;
 		BranchTargetAddress: in std_logic_vector(DataWidth-1 downto 0);
@@ -43,7 +42,7 @@ architecture Branch_Predictor_Behavior of Branch_Predictor is
 		TakeBranch <= '1' 
 			when PCPlusOne = History(to_integer(Index)).SourceAddr and
 			 	 History(to_integer(Index)).HistoryBit = '1' else
-			'0';
+			     '0';
 		PredictedAddress <= History(to_integer(Index)).TargetAddr;
 		
 		process(CLK)

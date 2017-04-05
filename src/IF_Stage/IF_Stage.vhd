@@ -8,6 +8,7 @@ use IEEE.std_logic_1164.all;
 
 entity IF_Stage is
 	generic (RegWidth : integer := 16;
+	        OpcodeBits : integer := 4;
 			PredictorAddrBits : integer := 4);
 	port (
     	CLK: in std_logic;
@@ -51,13 +52,13 @@ architecture IF_Stage_Behavior of IF_Stage is
     
         Jump_Logic : entity work.Jump_Logic
                         generic map (RegWidth)
-                        port map (Instruction, CurrentPC, JumpTarget, 
-                            TakeJump, Halt);
+                        port map (Instruction, CurrentPC(RegWidth-1 downto RegWidth-OpcodeBits),
+                            JumpTarget, TakeJump, Halt);
     
         Branch_Pred : entity work.Branch_Predictor
                         generic map (RegWidth, PredictorAddrBits)
-                        port map (CLK, RST, PredictionMiss, Instruction,
-                            PCPlusOne, ShouldBranch, BranchTargetAddr, 
+                        port map (CLK, RST, PredictionMiss, PCPlusOne, 
+                            ShouldBranch, BranchTargetAddr, 
                             BranchSourceAddr, PredictedBranchAddr, 
                             TakeBranch);
         

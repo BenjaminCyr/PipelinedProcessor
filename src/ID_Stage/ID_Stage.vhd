@@ -48,7 +48,7 @@ architecture ID_Stage_Behavior of ID_Stage is
 	signal Instruction : std_logic_vector (RegWidth-1 downto 0);
 
 	signal Opcode : std_logic_vector (OpcodeBits-1 downto 0);
-	signal Immediate : std_logic_vector (RegWidth-OpcodeBits-2*AddrBits downto 0);
+	signal Immediate : std_logic_vector (RegWidth-OpcodeBits-2*AddrBits-1 downto 0);
 	signal Rs : std_logic_vector(AddrBits-1 downto 0);
 	signal Rt : std_logic_vector(AddrBits-1 downto 0);
 	signal Rd : std_logic_vector(AddrBits-1 downto 0);
@@ -92,4 +92,4 @@ architecture ID_Stage_Behavior of ID_Stage is
         Rs_Out <= Rs;
         Rt_Out <= Rt;
         Rd_Out <= Rd;
-end architecture ID_Stage;
+end architecture ID_Stage_Behavior;
