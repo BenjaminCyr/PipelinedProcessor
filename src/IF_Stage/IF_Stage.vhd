@@ -28,6 +28,8 @@ entity IF_Stage is
 end entity IF_Stage;
 
 architecture IF_Stage_Behavior of IF_Stage is 
+    signal not_CLK : std_logic;
+    
 	signal NextPC : std_logic_vector (RegWidth-1 downto 0);
 	signal CurrentPC : std_logic_vector (RegWidth-1 downto 0);
 	signal PCPlusOne : std_logic_vector (RegWidth-1 downto 0);
@@ -43,13 +45,15 @@ architecture IF_Stage_Behavior of IF_Stage is
 	signal Instruction : std_logic_vector(RegWidth-1 downto 0);
     
     begin
+        not_CLK <= CLK;
+        
         PC_Reg : entity work.PC_Register 
                     generic map (RegWidth) 
                     port map (CLK, RST, NextPC, CurrentPC);
     
         Instr_Mem : entity work.Instruction_Memory
                     generic map (FileName, RegWidth, RegWidth)
-                    port map (not CLK, CurrentPC, Instruction);
+                    port map (not_CLK, CurrentPC, Instruction);
     
         Jump_Logic : entity work.Jump_Logic
                         generic map (RegWidth)

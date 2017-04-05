@@ -44,6 +44,7 @@ entity ID_Stage is
 end entity ID_Stage;
 
 architecture ID_Stage_Behavior of ID_Stage is 
+    signal not_CLK : std_logic;
 	signal Stall : std_logic;
 	signal Instruction : std_logic_vector (RegWidth-1 downto 0);
 
@@ -54,6 +55,8 @@ architecture ID_Stage_Behavior of ID_Stage is
 	signal Rd : std_logic_vector(AddrBits-1 downto 0);
 
     begin
+        not_CLK <= CLK;
+        
         Opcode <= Instruction(RegWidth-1 downto RegWidth-OpcodeBits);
         Immediate <= Instruction(RegWidth-OpcodeBits-2*AddrBits-1 downto 0);
     
@@ -80,7 +83,7 @@ architecture ID_Stage_Behavior of ID_Stage is
         
         Reg_File : entity work.Register_File 
                     generic map (RegWidth, AddrBits)
-                    port map (not CLK, RST, WB_RegWrite, Rs, Rt, ReadData1_Out,
+                    port map (not_CLK, RST, WB_RegWrite, Rs, Rt, ReadData1_Out,
                         ReadData2_Out, WB_DestReg, WB_WriteData, 
                         inr, out_value);
     

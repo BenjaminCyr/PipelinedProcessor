@@ -116,5 +116,7 @@ architecture Pipelined_Processor_Behavior of Pipelined_Processor is
                 port map (CLK, RST, MEM_WB_ControlOut, MemOutput, 
                     MEM_EX_WB_ALUOut, MEM_EX_WB_DestReg, WB_ID_EX_WriteData, 
                     WB_ID_EX_DestReg, WB_ID_EX_RegWrite);
+        
+        MemAddr <= MEM_EX_WB_ALUOut;
 
 end architecture Pipelined_Processor_Behavior;
