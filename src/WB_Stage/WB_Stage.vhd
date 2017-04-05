@@ -18,6 +18,7 @@ entity WB_Stage is
 		DestReg_In: in std_logic_vector(AddrBits-1 downto 0);
 
 		WriteData out std_logic_vector(RegWidth-1 downto 0);
+		DestReg_Out: out std_logic_vector(AddrBits-1 downto 0);
 		RegWrite out std_logic);
 end entity WB_Stage;
 

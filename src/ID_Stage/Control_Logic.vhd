@@ -8,9 +8,11 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity Control_Logic is
+	generic (OpcodeBits : integer := 4;
+			ControlBits : integer := 13);
 	port (
-		Opcode: in std_logic_vector(3 downto 0);
-		Control_Signals: out std_logic_vector(12 downto 0));
+		Opcode: in std_logic_vector(OpcodeBits-1 downto 0);
+		Control_Signals: out std_logic_vector(ControlBits-1 downto 0));
 end entity Control_Logic;
 
 architecture Control_Logic_Behavior of Control_Logic is

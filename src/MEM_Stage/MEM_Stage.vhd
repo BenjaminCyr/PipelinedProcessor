@@ -18,12 +18,10 @@ entity MEM_Stage is
 		ALUOut_In: in std_logic_vector(RegWidth-1 downto 0);
 		ALUOut_Out: out std_logic_vector(RegWidth-1 downto 0);
 		MemData_In: in std_logic_vector(RegWidth-1 downto 0);
-		MemData_In: out std_logic_vector(RegWidth-1 downto 0);
+		MemData_Out: out std_logic_vector(RegWidth-1 downto 0);
 		DestReg_In: in std_logic_vector(AddrBits-1 downto 0);
 		DestReg_Out: out std_logic_vector(AddrBits-1 downto 0);
 
-		MemOut_In in std_logic_vector(RegWidth-1 downto 0);
-		MemOut_Out out std_logic_vector(RegWidth-1 downto 0);
 		MemRead out std_logic;
 		MemWrite out std_logic;
 		RegWrite out std_logic);
@@ -46,5 +44,4 @@ architecture MEM_Stage_Behavior of MEM_Stage is
 					ALUOut_In, ALUOut_Out, MemData_In, MemData_Out, 
 					DestReg_In, DestReg_Out);
 
-	MemOut_Out <= MemOut_In;
 end architecture MEM_Stage_Behavior;

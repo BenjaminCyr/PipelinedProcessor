@@ -17,7 +17,7 @@ entity PC_Muxes is
 		Halt: in std_logic; --From Jump Logic HALT instruction
 		Stall: in std_logic; --From ID Hazard Detection
 		PC: in std_logic_vector(DataWidth-1 downto 0);
-		BranchTarget: in std_logic_vector(DataWidth-1 downto 0);
+		PredictedBranchAddr : in std_logic_vector(DataWidth-1 downto 0);
 		OverwriteAddress: in std_logic_vector(DataWidth-1 downto 0);
 		JumpTarget: in std_logic_vector(DataWidth-1 downto 0);
 		PCPlusOne: out std_logic_vector(DataWidth-1 downto 0);
@@ -32,6 +32,6 @@ architecture PC_Muxes_Behavior of PC_Muxes is
 		NextPC <= OverwriteAddress when PCOverwrite = '1' else
 					PC when Halt = '1' or Stall = '1' else
 					JumpTarget when TakeJump = '1' else
-					BranchTarget when TakeBranch = '1' else
+					PredictedBranchAddr when TakeBranch = '1' else
 					PCPlusOne_Sig;
 end architecture PC_Muxes_Behavior;

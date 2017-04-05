@@ -45,8 +45,7 @@ entity EX_Stage is
 
 		WB_WriteData: in std_logic_vector(RegWidth-1 downto 0);
 		WB_DestReg: in std_logic_vector(AddrBits-1 downto 0);
-		WB_RegWrite: in std_logic;
-		);
+		WB_RegWrite: in std_logic);
 end entity EX_Stage;
 
 architecture EX_Stage_Behavior of EX_Stage is 
