@@ -80,7 +80,7 @@ architecture ID_Stage_Behavior of ID_Stage is
         
         Reg_File : entity work.Register_File 
                     generic map (RegWidth, AddrBits)
-                    port map (CLK, RST, WB_RegWrite, Rs, Rt, ReadData1_Out,
+                    port map (not CLK, RST, WB_RegWrite, Rs, Rt, ReadData1_Out,
                         ReadData2_Out, WB_DestReg, WB_WriteData, 
                         inr, out_value);
     
