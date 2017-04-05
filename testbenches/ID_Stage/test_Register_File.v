@@ -37,7 +37,7 @@ Register_File r1 (
 initial
 begin
 	#0 $monitor ("%g ns :: CLK=%b, RST=%b, WriteEN=%b, ReadAddr1=%b, ReadAddr2=%b, ReadData1=%b, ReadData2=%b, WriteAddr=%b, WriteData=%b, inr=%b, out_value=%b", $time,  CLK, RST, WriteEN, ReadAddr1, ReadAddr2, ReadData1, ReadData2, WriteAddr, WriteData, inr, out_value);
-	#0 CLK = 1;
+	#0 CLK = 0;
 	#0 RST = 0;
 	#0 WriteEN = 0;
 	#0 ReadAddr1 = 0;
