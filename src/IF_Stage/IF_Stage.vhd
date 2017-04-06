@@ -45,7 +45,7 @@ architecture IF_Stage_Behavior of IF_Stage is
 	signal Instruction : std_logic_vector(RegWidth-1 downto 0);
     
     begin
-        not_CLK <= CLK;
+        not_CLK <= not CLK;
         
         PC_Reg : entity work.PC_Register 
                     generic map (RegWidth) 

@@ -55,7 +55,7 @@ architecture ID_Stage_Behavior of ID_Stage is
 	signal Rd : std_logic_vector(AddrBits-1 downto 0);
 
     begin
-        not_CLK <= CLK;
+        not_CLK <= not CLK;
         
         Opcode <= Instruction(RegWidth-1 downto RegWidth-OpcodeBits);
         Immediate <= Instruction(RegWidth-OpcodeBits-2*AddrBits-1 downto 0);
