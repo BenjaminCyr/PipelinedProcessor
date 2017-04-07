@@ -33,7 +33,7 @@ architecture Instruction_Memory_Behavior of Instruction_Memory is
       for i in 0 to 2**AddrBits - 1 loop
         exit when endfile(FileHandle);
         readline(FileHandle, CurrentLine);
-        hread(CurrentLine, TempWord);
+        read(CurrentLine, TempWord);
         Result(i)    := TempWord;
       end loop;
       return Result;
