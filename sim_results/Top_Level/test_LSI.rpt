@@ -1,0 +1,14 @@
+ADDI $1, $0, 0xFFFA
+LSI $2, $1, 1
+LSI $3, $2, 3
+HALT
+
+Time, inr, out_value,
+60 ns, 0, 0000,
+70 ns, 1, fffa,
+80 ns, 2, fff4,
+90 ns, 3, ffa0,
+100 ns, 4, 0000,
+110 ns, 5, 0000,
+120 ns, 6, 0000,
+130 ns, 7, 0000,
