@@ -24,7 +24,7 @@ architecture Jump_Logic_Behavior of Jump_Logic is
 	begin
 		Opcode <= Instruction(RegWidth-1 downto RegWidth-4);
 		JumpBits <= Instruction(RegWidth-5 downto 0);
-		TakeJump <= '1' when Opcode = "1110" else '0';
+		TakeJump <= '1' when Opcode = "1110" or Opcode = "1101" else '0';
 		Halt <= '1' when Opcode = "0000" else '0';
 		JumpAddress <= PC_HighBits & JumpBits;
 end architecture Jump_Logic_Behavior;
