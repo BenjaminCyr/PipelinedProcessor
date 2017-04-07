@@ -7,7 +7,7 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity IF_Stage is
-	generic (FileName : string := "instructions.txt";
+	generic (FileName : string := "../instructions.txt";
 			RegWidth : integer := 16;
 	        OpcodeBits : integer := 4;
 			PredictorAddrBits : integer := 4);

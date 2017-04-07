@@ -11,7 +11,7 @@ use IEEE.std_logic_textio.all;
 use std.textio.all;
 
 entity Instruction_Memory is
-	generic (FileName : string := "instructions.txt";
+	generic (FileName : string := "../instructions.txt";
 			 DataWidth : integer := 16;
 			 AddrBits : integer := 16);
 	port (

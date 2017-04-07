@@ -7,7 +7,7 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity Pipelined_Processor is
-	generic (FileName : string := "instructions.txt";
+	generic (FileName : string := "../instructions.txt";
 			DataWidth : integer := 16;
 			RegAddrBits : integer := 3;
 			PredictorAddrBits : integer := 4;
