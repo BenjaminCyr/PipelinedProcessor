@@ -19,26 +19,16 @@ wire [DataWidth-1:0] out_value;
 
 wire MemRead;
 wire MemWrite;
-wire NotCLK;
-wire [DataWidth-1:0] CurrentPC;
-wire [DataWidth-1:0] Instruction;
 wire [DataWidth-1:0] MemAddr; 
 wire [DataWidth-1:0] MemData;
 reg [DataWidth-1:0] MemOutput;
 
-Instruction_Memory #(.FileName(TestFile)) m1 (
-	.CLK(NotCLK),
-	.ReadAddr(CurrentPC),
-	.ReadData(Instruction)
-)
 
 Pipelined_Processor #(.FileName(TestFile)) p1 (
 	.CLK(CLK),
 	.RST(RST),
 	.inr(inr),
 	.out_value(out_value),
-	.CurrentPC(CurrentPC),
-	.Instruction(Instruction),
 	.MemRead(MemRead),
 	.MemWrite(MemWrite),
 	.MemAddr(MemAddr),
@@ -67,7 +57,6 @@ end
 always
 begin
 	#5 CLK = !CLK;
-	not NotCLK = !CLK;
 end
 
 endmodule
