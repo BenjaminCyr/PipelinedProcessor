@@ -7,8 +7,7 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity IF_Stage is
-	generic (FileName : string := "../instructions.txt";
-			RegWidth : integer := 16;
+	generic (RegWidth : integer := 16;
 	        OpcodeBits : integer := 4;
 			PredictorAddrBits : integer := 4);
 	port (
@@ -22,16 +21,16 @@ entity IF_Stage is
 		BranchSourceAddr: in std_logic_vector(RegWidth-1 downto 0);
 		BranchTargetAddr: in std_logic_vector(RegWidth-1 downto 0);
 
+		CurrentPC: out std_logic_vector(RegWidth-1 downto 0);
+		Instruction: in std_logic_vector(RegWidth-1 downto 0);
+
 		BranchTaken: out std_logic;
 		PC_Out: out std_logic_vector(RegWidth-1 downto 0);
 		Instruction_Out: out std_logic_vector(RegWidth-1 downto 0));
 end entity IF_Stage;
 
 architecture IF_Stage_Behavior of IF_Stage is 
-    signal not_CLK : std_logic;
-    
 	signal NextPC : std_logic_vector (RegWidth-1 downto 0);
-	signal CurrentPC : std_logic_vector (RegWidth-1 downto 0);
 	signal PCPlusOne : std_logic_vector (RegWidth-1 downto 0);
 
 	signal TakeBranch : std_logic;
@@ -41,19 +40,11 @@ architecture IF_Stage_Behavior of IF_Stage is
 	signal JumpTarget : std_logic_vector(RegWidth-1 downto 0);
 
 	signal Halt : std_logic;
-
-	signal Instruction : std_logic_vector(RegWidth-1 downto 0);
     
     begin
-        not_CLK <= not CLK;
-        
         PC_Reg : entity work.PC_Register 
                     generic map (RegWidth) 
                     port map (CLK, RST, NextPC, CurrentPC);
-    
-        Instr_Mem : entity work.Instruction_Memory
-                    generic map (FileName, RegWidth, RegWidth)
-                    port map (not_CLK, CurrentPC, Instruction);
     
         Jump_Logic : entity work.Jump_Logic
                         generic map (RegWidth)

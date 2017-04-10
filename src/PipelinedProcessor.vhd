@@ -7,8 +7,7 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity Pipelined_Processor is
-	generic (FileName : string := "../instructions.txt";
-			DataWidth : integer := 16;
+	generic (DataWidth : integer := 16;
 			RegAddrBits : integer := 3;
 			PredictorAddrBits : integer := 4;
 			OpcodeBits : integer := 4;
@@ -22,7 +21,12 @@ entity Pipelined_Processor is
 
 		inr: in std_logic_vector(RegAddrBits-1 downto 0);
 		out_value: out std_logic_vector(DataWidth-1 downto 0);
+
+		-- Instruction Memory Connections
+		PC: out std_logic_vector(DataWidth-1 downto 0);
+		Instruction: in std_logic_vector(DataWidth-1 downto 0);
 	
+		-- Data Memory Connections
 		MemRead : out std_logic;
 		MemWrite : out std_logic;
 		MemAddr : out std_logic_vector(DataWidth-1 downto 0);
@@ -70,12 +74,13 @@ architecture Pipelined_Processor_Behavior of Pipelined_Processor is
     begin
     
         IF_Stage : entity work.IF_Stage
-                generic map (FileName, DataWidth, PredictorAddrBits) 
+                generic map (DataWidth, PredictorAddrBits) 
                 port map (CLK, RST, ID_IF_EX_Stall, 
                     EX_IF_ID_PCOverwrite_Flush,
                     EX_IF_PredictionMiss, EX_IF_ShouldBranch,
                     EX_IF_BranchSourceAddr, EX_IF_BranchTargetAddr,
-                    IF_ID_BranchTaken, IF_ID_PC_Out, IF_ID_Instruction_Out);
+					CurrentPC, Instruction, IF_ID_BranchTaken, 
+					IF_ID_PC_Out, IF_ID_Instruction_Out);
     
         ID_Stage : entity work.ID_Stage	
                 generic map (DataWidth, OpcodeBits, ControlBits_EX, 
