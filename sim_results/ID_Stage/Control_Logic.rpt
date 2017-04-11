@@ -7,8 +7,8 @@
 60 ns :: Opcode=0110, Control_Signals=1101000000010
 70 ns :: Opcode=0111, Control_Signals=1111000000010
 80 ns :: Opcode=1000, Control_Signals=0011000000010
-90 ns :: Opcode=1001, Control_Signals=0011000001000
-100 ns :: Opcode=1010, Control_Signals=0011000000111
+90 ns :: Opcode=1001, Control_Signals=0011000000111
+100 ns :: Opcode=1010, Control_Signals=0011000001000 
 110 ns :: Opcode=1011, Control_Signals=0100011000000
 120 ns :: Opcode=1100, Control_Signals=0100010000000
 130 ns :: Opcode=1101, Control_Signals=0000000010010
