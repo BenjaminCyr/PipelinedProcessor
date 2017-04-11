@@ -18,7 +18,7 @@ entity Data_Memory is
 		MemRead : in std_logic;
 		MemWrite : in std_logic;
 		Address: in std_logic_vector(AddrBits-1 downto 0);
-		WriteData: in std_logic_vector(DataWidth-1 downto 0));
+		WriteData: in std_logic_vector(DataWidth-1 downto 0);
 		ReadData: out std_logic_vector(DataWidth-1 downto 0));
 end entity Data_Memory;
 
@@ -35,7 +35,7 @@ architecture Data_Memory_Behavior of Data_Memory is
 			if MemRead = '1' then
 				ReadData <= memory(to_integer(unsigned(Address)));
 			elsif MemWrite = '1' then
-				memory(to_integer(unsigned(Address)) <= WriteData;
+				memory(to_integer(unsigned(Address))) <= WriteData;
 			end if;
 		end if;
 	end process;

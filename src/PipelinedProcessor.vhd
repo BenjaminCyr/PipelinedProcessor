@@ -36,7 +36,7 @@ architecture Pipelined_Processor_Behavior of Pipelined_Processor is
 	signal notCLK : std_logic;
 
     begin
-		notCLK <= !CLK;
+		notCLK <= not CLK;
     
         CPU : entity work.CPU
                 generic map (DataWidth, RegAddrBits, PredictorAddrBits,
@@ -47,11 +47,11 @@ architecture Pipelined_Processor_Behavior of Pipelined_Processor is
 					DataMemWriteData, DataMemReadData);
 
 		InstrMem : entity work.Instruction_Memory
-				generic map (FileName, DataWidth, AddrBits)
+				generic map (FileName, DataWidth, DataWidth)
 				port map (notCLK, InstrMemAddr, InstrMemData);
 
 		DataMem : entity work.Data_Memory
-				generic map (DataWidth, AddrBits)
+				generic map (DataWidth, DataWidth)
 				port map (notCLK, DataMemRead, DataMemWrite, DataMemAddr,
 					DataMemWriteData, DataMemReadData);
 

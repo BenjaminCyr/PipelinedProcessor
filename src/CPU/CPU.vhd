@@ -79,7 +79,7 @@ architecture CPU_Behavior of CPU is
                     EX_IF_ID_PCOverwrite_Flush,
                     EX_IF_PredictionMiss, EX_IF_ShouldBranch,
                     EX_IF_BranchSourceAddr, EX_IF_BranchTargetAddr,
-					CurrentPC, Instruction, IF_ID_BranchTaken, 
+					PC, Instruction, IF_ID_BranchTaken, 
 					IF_ID_PC_Out, IF_ID_Instruction_Out);
     
         ID_Stage : entity work.ID_Stage	

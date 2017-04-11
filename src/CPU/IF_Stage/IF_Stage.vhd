@@ -31,6 +31,7 @@ end entity IF_Stage;
 
 architecture IF_Stage_Behavior of IF_Stage is 
 	signal NextPC : std_logic_vector (RegWidth-1 downto 0);
+	signal CurrPC : std_logic_vector (RegWidth-1 downto 0);
 	signal PCPlusOne : std_logic_vector (RegWidth-1 downto 0);
 
 	signal TakeBranch : std_logic;
@@ -42,13 +43,14 @@ architecture IF_Stage_Behavior of IF_Stage is
 	signal Halt : std_logic;
     
     begin
+        
         PC_Reg : entity work.PC_Register 
                     generic map (RegWidth) 
-                    port map (CLK, RST, NextPC, CurrentPC);
+                    port map (CLK, RST, NextPC, CurrPC);
     
         Jump_Logic : entity work.Jump_Logic
                         generic map (RegWidth)
-                        port map (Instruction, CurrentPC(RegWidth-1 downto RegWidth-OpcodeBits),
+                        port map (Instruction, CurrPC(RegWidth-1 downto RegWidth-OpcodeBits),
                             JumpTarget, TakeJump, Halt);
     
         Branch_Pred : entity work.Branch_Predictor
@@ -61,9 +63,10 @@ architecture IF_Stage_Behavior of IF_Stage is
         PC_Muxes : entity work.PC_Muxes
                     generic map (RegWidth)
                     port map (TakeBranch, TakeJump, PCOverwrite, Halt, Stall,
-                        CurrentPC, PredictedBranchAddr, BranchTargetAddr,
+                        CurrPC, PredictedBranchAddr, BranchTargetAddr,
                         JumpTarget, PCPlusOne, NextPC);
     
+        CurrentPC <= CurrPC;
         PC_Out <= PCPlusOne;
         BranchTaken <= TakeBranch;
         Instruction_Out <= Instruction;
