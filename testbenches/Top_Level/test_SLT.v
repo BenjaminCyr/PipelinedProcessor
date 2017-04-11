@@ -19,23 +19,12 @@ reg RST;
 reg [RegAddrBits-1:0] inr;
 wire [DataWidth-1:0] out_value;
 
-wire MemRead;
-wire MemWrite;
-wire [DataWidth-1:0] MemAddr; 
-wire [DataWidth-1:0] MemData;
-reg [DataWidth-1:0] MemOutput;
-
 
 Pipelined_Processor #(.FileName(TestFile)) p1 (
 	.CLK(CLK),
 	.RST(RST),
 	.inr(inr),
-	.out_value(out_value),
-	.MemRead(MemRead),
-	.MemWrite(MemWrite),
-	.MemAddr(MemAddr),
-	.MemData(MemData),
-	.MemOutput(MemOutput)
+	.out_value(out_value)
 );
 
 initial
@@ -43,7 +32,6 @@ begin
 	#0 CLK = 0;
 	#0 inr = 0;
 	#0 RST = 1;
-	#0 MemOutput = 0;
 	#0 $display ("ADDI $1, $0, -1\nADDI $2, $0, 3\nSLT $3, $1, $2\nSLT $4, $2, $1\nSLT $5, $1, $1\nHALT\n");
 	#0 $display ("Time, inr, out_value,");
 	#10 RST = 0;
