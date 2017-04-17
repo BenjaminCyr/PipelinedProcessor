@@ -54,5 +54,4 @@ architecture Pipelined_Processor_Behavior of Pipelined_Processor is
 				generic map (DataWidth, DataWidth)
 				port map (notCLK, DataMemRead, DataMemWrite, DataMemAddr,
 					DataMemWriteData, DataMemReadData);
-
 end architecture Pipelined_Processor_Behavior;

@@ -8,13 +8,13 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity Nexys4_Button_CLK is
-	generic ( N : integer := 8
-			 TestFile : string := "../../instructions.txt");
+	generic ( N : integer := 8;
+			 TestFile : string := "../instructions.txt");
 	Port (
 			CLK : in std_logic;
 			RST : in std_logic;
 			button_in : in std_logic;
-			inr : in std_logic; 
+			inr : in std_logic_vector(2 downto 0); 
 			out_value : out std_logic_vector(15 downto 0));
 end Nexys4_Button_CLK;
 
@@ -23,11 +23,11 @@ architecture Nexys4_Button_CLK_Behavior of Nexys4_Button_CLK is
 	begin
 
 		p1 : entity work.Pipelined_Processor
-				generic map (Filename <= TestFile)
+				generic map (Filename => TestFile)
 				port map (button_out, RST, inr, out_value);
 
 		d1 : entity work.Debounce
-				generic map (N <= N)
+				generic map (N => N)
 				port map (button_in, CLK, button_out);
 	
 end Nexys4_Button_CLK_Behavior;
