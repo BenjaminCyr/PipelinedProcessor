@@ -17,10 +17,28 @@ end entity Control_Logic;
 
 architecture Control_Logic_Behavior of Control_Logic is
 	type instructions is (HALT, ADD, SUB, ANDD, ORR, SLT, LSI, RSI, 
-							ADDI, LW, SW, BNE, BEQ, JL, J, JR)
+							ADDI, LW, SW, BNE, BEQ, JL, J, JR, ERROR);
 	signal current_instruction : instructions := HALT;
 	begin
-		current_instruction <= Opcode(3 downto 0);
+	    with Opcode(3 downto 0) select
+	        current_instruction <= HALT when "0000",
+                                    ADD when "0001",
+                                    SUB when "0010",
+                                    ANDD when "0011",
+                                    ORR when "0100",
+                                    SLT when "0101",
+                                    RSI when "0110",
+                                    LSI when "0111",
+                                    ADDI when "1000",
+                                    LW when "1001",
+                                    SW when "1010",
+                                    BNE when "1011",
+                                    BEQ when "1100",
+                                    JL when "1101",
+                                    J when "1110",
+                                    JR when "1111",
+                                    ERROR when others;
+                                    
 		with current_instruction select
 			Control_Signals <= "0000000000000" when HALT,
 							"0010100000010" when ADD,
