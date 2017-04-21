@@ -7,7 +7,7 @@ ADD $2, $2, $3
 LW $4, 0($2)
 HALT
 
-Time, inr, out_value, Instruction,
+Time, inr, out_value,
 110 ns, 0, 0000,
 120 ns, 1, ffff,
 130 ns, 2, 0009,
