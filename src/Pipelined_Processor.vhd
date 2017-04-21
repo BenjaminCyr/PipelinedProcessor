@@ -8,6 +8,7 @@ use IEEE.std_logic_1164.all;
 
 entity Pipelined_Processor is
 	generic (FileName : string := "../instructions.txt";
+	        DataFileName : string := "";
 			DataWidth : integer := 16;
 			RegAddrBits : integer := 3;
 			PredictorAddrBits : integer := 4;
@@ -51,7 +52,7 @@ architecture Pipelined_Processor_Behavior of Pipelined_Processor is
 				port map (notCLK, InstrMemAddr, InstrMemData);
 
 		DataMem : entity work.Data_Memory
-				generic map (DataWidth, DataWidth)
+				generic map (DataFileName, DataWidth, DataWidth)
 				port map (notCLK, DataMemRead, DataMemWrite, DataMemAddr,
 					DataMemWriteData, DataMemReadData);
 end architecture Pipelined_Processor_Behavior;

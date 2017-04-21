@@ -11,7 +11,8 @@ use IEEE.std_logic_textio.all;
 use std.textio.all;
 
 entity Data_Memory is
-	generic (DataWidth : integer := 16;
+	generic (FileName : string := "";
+	         DataWidth : integer := 16;
 			 AddrBits : integer := 16);
 	port (
 		CLK : in std_logic;
@@ -26,7 +27,26 @@ architecture Data_Memory_Behavior of Data_Memory is
     subtype WORD  is std_logic_vector(DataWidth-1 downto 0);
     type    RAM   is array(0 to  2**AddrBits-1) of WORD;
     
-    signal memory : RAM := (others => (others => '0'));
+    impure function ocram_ReadMemFile(FileName : STRING) return RAM is
+          file FileHandle       : TEXT;
+          variable fstatus      : file_open_status;
+          variable CurrentLine  : LINE;
+          variable TempWord     : STD_LOGIC_VECTOR(WORD'length-1 downto 0);
+          variable Result       : RAM    := (others => (others => '0'));
+        begin
+          if not (FileName = "") then
+              file_open(fstatus, FileHandle, FileName, READ_MODE);
+              for i in 0 to 2**AddrBits - 1 loop
+                exit when endfile(FileHandle);
+                readline(FileHandle, CurrentLine);
+                hread(CurrentLine, TempWord);
+                Result(i)    := TempWord;
+              end loop;
+          end if;
+          return Result;
+    end function;
+        
+    signal memory : RAM := ocram_ReadMemFile(FileName);
     
 	begin
 	process(CLK)

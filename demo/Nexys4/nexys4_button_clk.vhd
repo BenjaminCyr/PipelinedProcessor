@@ -23,7 +23,7 @@ architecture Nexys4_Button_CLK_Behavior of Nexys4_Button_CLK is
 	begin
 
 		p1 : entity work.Pipelined_Processor
-				generic map (Filename => TestFile)
+				generic map (InstructionFilename => TestFile)
 				port map (button_out, RST, inr, out_value);
 
 		d1 : entity work.Debounce
