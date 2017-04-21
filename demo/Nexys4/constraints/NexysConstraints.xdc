@@ -44,6 +44,8 @@ set_property PACKAGE_PIN H17 [get_ports {out_value[0]}]
 
 set_property IOSTANDARD LVCMOS33 [get_ports button_in]
 set_property PACKAGE_PIN N17 [get_ports button_in]
+set_property IOSTANDARD LVCMOS33 [get_ports CLK_switch]
+set_property PACKAGE_PIN V10 [get_ports CLK_switch]
 
 
 
